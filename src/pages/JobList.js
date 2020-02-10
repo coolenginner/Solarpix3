@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Alert, Text } from 'react-native';
-// import FloatingButton from '../components/FloatingButton'
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 export class JobList extends React.Component {
 
@@ -11,10 +11,25 @@ export class JobList extends React.Component {
     render() {
 
         return (
-            <View style = { styles.container }>
-                <Text style={{ fontSize: 28, fontWeight:'bold' }}>Job List</Text>
-                <View className="item" key='warning'>Limit 10 jobs.  Delete jobs to make space.</View>
-                {/* <FloatingButton actionOnPress={this.onAddJob} /> */}
+            <View style={{ flex: 1, marginTop: 50}}>
+                <Text style={{ textAlign: 'left',fontSize: 25, fontWeight:'bold', marginLeft: 20}}>Job List</Text>
+                <Text style={{ textAlign: 'center',marginTop: 20, fontWeight:'bold'}}>8888888</Text>
+                <SwipeListView
+            data={this.state.listViewData}
+            renderItem={ (data, rowMap) => (
+                <View style={styles.rowFront}>
+                    <Text>I am {data.item} in a SwipeListView</Text>
+                </View>
+            )}
+            renderHiddenItem={ (data, rowMap) => (
+                <View style={styles.rowBack}>
+                    <Text>Left</Text>
+                    <Text>Right</Text>
+                </View>
+            )}
+            leftOpenValue={75}
+            rightOpenValue={-75}
+        />
             </View>
         );
     }
