@@ -1,11 +1,10 @@
 import React from 'react';
-import { Home, Settings, SignIn, JobList, CreateJob} from './src/pages';
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-import { createAppContainer } from 'react-navigation'
-import { SafeAreaView, ScrollView, Dimensions, View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import SignIn from './src/pages/SignIn'
+import JobList from './src/pages/JobList'
 
 const { width } = Dimensions.get('window');
-
 
 export default class App extends React.Component {
   render() {
@@ -15,6 +14,8 @@ export default class App extends React.Component {
     );
   }
 }
+
+createAppContainer
 
 const CustomDrawerComponent = (props) => (
   <SafeAreaView style={{ flex: 1 }}>
