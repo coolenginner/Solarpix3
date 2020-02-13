@@ -1,59 +1,27 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator, createAppContainer } from "react-navigation";
-import SignIn from './src/pages/SignIn'
-import JobList from './src/pages/JobList'
+import React, { Component } from 'react';
+import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
 
-const { width } = Dimensions.get('window');
+import SignIn from './components/pages/SignIn';
+import JobList from './components/pages/JobList';
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
-    const AppNavigator = createAppContainer(AppDrawerNavigator);
-    return (
-      <AppNavigator />
-    );
-  }
+	  return (
+	    <Router>
+	      <Scene key="root">
+	        <Scene key="signin"
+	          component={SignIn}
+	        	animation='fade'
+	          hideNavBar={true}
+	          initial={true}
+	        />
+	        <Scene key="joblist"
+	          component={JobList}
+	          animation='fade'
+	          hideNavBar={true}
+	        />
+	      </Scene>
+	    </Router>
+	  );
+	}
 }
-
-createAppContainer
-
-const CustomDrawerComponent = (props) => (
-  <SafeAreaView style={{ flex: 1 }}>
-    <View style={{
-      height: 100, backgroundColor: 'white',
-      borderBottomWidth: 2,
-      borderBottomColor: 'black'
-    }}>
-      <Text style={{ textAlign: 'center', fontSize: 40, padding: 20 }}>Menu</Text>
-    </View>
-    <ScrollView>
-      <DrawerItems style={{
-        borderBottomWidth: 2,
-        borderBottomColor: 'black'
-      }} {...props} />
-    </ScrollView>
-  </SafeAreaView>
-)
-
-
-const AppDrawerNavigator = createDrawerNavigator({
-  CreateJob,
-  JobList,
-  Home,
-  Settings,
-  LogOut: {
-    screen: SignIn,
-    navigationOptions: ({ navigation }) => ({
-      drawerLockMode: 'locked-closed',
-    })
-  },
-}, {
-  initialRouteName: 'LogOut',
-  contentComponent: CustomDrawerComponent,
-  drawerWidth: width * 2 / 3,
-  contentOptions: {
-    activeTintColor: 'grey',
-    gestureEnabled: false,
-    labelStyle: { textTransform: 'uppercase' }
-  },
-});
