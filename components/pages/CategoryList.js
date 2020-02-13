@@ -4,40 +4,40 @@ import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Actions} from 'react-native-router-flux';
 
-export default class JobList extends Component {
+export default class CategoryList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data_list: [
         {
-            title: 'React js frontend',
-            type: 0
+            title: 'aaa',
+            content: 'AAAAA',
+            type: 0,
+            count: 1
         },
         {
-            title: 'React Native app',
-            type: 1
+            title: 'bbb',
+            content: 'BBBBBB',
+            type: 1,
+            count: 0
+        },
+        {
+            title: 'ccc',
+            content: 'CCCCC',
+            type: 1,
+            count: 0
         }        
       ]
     }
   }
 
-  onNewJobClicked = () => {
-    console.log('new job button clicked');
-    Actions.newJob();
-  }
-
   Doclick_viewDetail(index) {
     console.log('Doclick_viewDetail:', this.state.data_list[index].title);
-    Actions.categoryList();
-  }
-
-  onDeleteClicked(item) {
-    console.log('delete', item);
   }
 
   actionOnRow(item) {
     console.log('Selected Item :',item);
-    Actions.categoryList();
+    Actions.photoUpload();
   }
 
   renderItems(data_list, sectionIndex) {
@@ -56,12 +56,7 @@ export default class JobList extends Component {
 
     return (
       <View style={{ flex: 1, marginTop: 80}}>
-        <Text style={styles.text}>Job List</Text>
-
-        <TouchableOpacity style={styles.view_newjob} onPress={this.onNewJobClicked}>
-          <Icon name="plussquareo" color='gray' size={20} />
-          <Text style={styles.text_newjob}>New Job</Text>        
-        </TouchableOpacity>
+        <Text style={styles.text}>Category List</Text>
 
         <FlatList
           data= {this.state.data_list}
@@ -69,11 +64,15 @@ export default class JobList extends Component {
           extraData= {this.state}
           renderItem={ ({item, index}) =>
             <TouchableWithoutFeedback onPress={ () => this.actionOnRow(item)}>
-              <View key={index} style={styles.view_list}>              
-                <Text style={styles.list}>{item.title}</Text>
-                <TouchableOpacity style={styles.delete_button} onPress={this.onDeleteClicked(item)}>
-                  <Text style={{color:'white', fontSize:12}}>Delete</Text>        
-                </TouchableOpacity>
+              <View key={index} style={styles.view_list}>
+                <View>           
+                  <Text style={styles.list}>{item.title}</Text>
+                  <Text style={styles.list}>{item.content}</Text>
+                </View>
+                <View style={{marginRight:10}}>      
+                  <Text style={styles.list}>Pics</Text>
+                  <Text style={{fontSize:16, alignSelf: 'center'}}>{item.count.toString()}</Text>
+                </View>
               </View>
             </TouchableWithoutFeedback>
           }
@@ -95,14 +94,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 25, fontWeight:'bold', marginLeft: 20,
   },
-  text_newjob: {
-    fontSize: 18, color:'dodgerblue', marginLeft: 10,
-  },
-  view_newjob: {
-    marginTop: 30, flexDirection: 'row', marginLeft: 10,
-  },
   view_list: {
-    height: 40, margin: 10, backgroundColor: 'lightgreen', justifyContent:'center', flexDirection: 'row', justifyContent: 'space-between',alignItems: 'center'
+    height: 50, marginHorizontal: 10, marginTop: 4, backgroundColor: 'lightgreen', justifyContent:'center', flexDirection: 'row', justifyContent: 'space-between',alignItems: 'center'
   },
   list: {
     fontSize:16, marginLeft:10,
