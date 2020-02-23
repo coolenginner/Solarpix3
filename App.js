@@ -1,45 +1,72 @@
-import React, { Component } from 'react';
-import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
 
-import SignIn from './components/pages/SignIn';
-import JobList from './components/pages/JobList';
-import NewJob from './components/pages/NewJob';
-import CategoryList from './components/pages/CategoryList';
-import PhotoUpload from './components/pages/PhotoUpload';
-
-export default class App extends Component {
-  render() {
-	  return (
-	    <Router>
-	      <Scene key="root">
-	        <Scene key="signin"
-	          component={SignIn}
-	          animation='fade'
-	          hideNavBar={true}
-	          initial={true}
-	        />
-	        <Scene key="joblist"
-	          component={JobList}
-	          animation='fade'
-	          hideNavBar={true}
-	        />
-	        <Scene key="newJob"
-	          component={NewJob}
-	          animation='fade'
-	          hideNavBar={true}
-	        />
-	        <Scene key="categoryList"
-	          component={CategoryList}
-	          animation='fade'
-	          hideNavBar={true}
-	        />
-	        <Scene key="photoUpload"
-	          component={PhotoUpload}
-	          animation='fade'
-	          hideNavBar={true}
-	        />
-	      </Scene>
-	    </Router>
-	  );
-	}
-}
+import React from 'react';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator} from 'react-navigation-stack';
+ 
+import SignIn from './pages/SignIn';
+import JobList from './pages/JobList';
+import CreateJob from './pages/CreateJob';
+// import ViewUser from './pages/ViewUser';
+// import ViewAllUser from './pages/ViewAllUser';
+// import DeleteUser from './pages/DeleteUser';
+ 
+const App = createStackNavigator({
+  SignIn: {
+    screen: SignIn,
+    navigationOptions: {
+      title: 'SIGN IN',
+      headerStyle: { backgroundColor: '#f05555' },
+      headerTintColor: '#ffffff',
+    },
+  },
+  JobList: {
+    screen: JobList,
+    navigationOptions: {
+      title: 'JOBLIST',
+      headerStyle: { backgroundColor: '#f05555' },
+      headerTintColor: '#ffffff',
+      headerLeft: null,
+    },
+  },
+  CreateJob: {
+    screen: CreateJob,
+    navigationOptions: {
+      title: 'CreateJob',
+      headerStyle: { backgroundColor: '#f05555' },
+      headerTintColor: '#ffffff',
+      headerLeft: null,
+    },
+  },
+  // Update: {
+  //   screen: UpdateUser,
+  //   navigationOptions: {
+  //     title: 'Update User',
+  //     headerStyle: { backgroundColor: '#f05555' },
+  //     headerTintColor: '#ffffff',
+  //   },
+  // },
+  // Register: {
+  //   screen: RegisterUser,
+  //   navigationOptions: {
+  //     title: 'Register User',
+  //     headerStyle: { backgroundColor: '#f05555' },
+  //     headerTintColor: '#ffffff',
+  //   },
+  // },
+  // Delete: {
+  //   screen: DeleteUser,
+  //   navigationOptions: {
+  //     title: 'Delete User',
+  //     headerStyle: { backgroundColor: '#f05555' },
+  //     headerTintColor: '#ffffff',
+  //   },
+  // },
+});
+export default createAppContainer(App);
