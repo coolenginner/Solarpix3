@@ -11,8 +11,8 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator} from 'react-navigation-stack';
  
 import SignIn from './pages/SignIn';
-import JobList from './pages/JobList';
-import CreateJob from './pages/CreateJob';
+// import JobList from './pages/JobList';
+// import CreateJob from './pages/CreateJob';
 // import ViewUser from './pages/ViewUser';
 // import ViewAllUser from './pages/ViewAllUser';
 // import DeleteUser from './pages/DeleteUser';
@@ -26,24 +26,24 @@ const App = createStackNavigator({
       headerTintColor: '#ffffff',
     },
   },
-  JobList: {
-    screen: JobList,
-    navigationOptions: {
-      title: 'JOBLIST',
-      headerStyle: { backgroundColor: '#f05555' },
-      headerTintColor: '#ffffff',
-      headerLeft: null,
-    },
-  },
-  CreateJob: {
-    screen: CreateJob,
-    navigationOptions: {
-      title: 'CreateJob',
-      headerStyle: { backgroundColor: '#f05555' },
-      headerTintColor: '#ffffff',
-      headerLeft: null,
-    },
-  },
+  // JobList: {
+  //   screen: JobList,
+  //   navigationOptions: {
+  //     title: 'JOBLIST',
+  //     headerStyle: { backgroundColor: '#f05555' },
+  //     headerTintColor: '#ffffff',
+  //     headerLeft: null,
+  //   },
+  // },
+  // CreateJob: {
+  //   screen: CreateJob,
+  //   navigationOptions: {
+  //     title: 'CreateJob',
+  //     headerStyle: { backgroundColor: '#f05555' },
+  //     headerTintColor: '#ffffff',
+  //     headerLeft: null,
+  //   },
+  // },
   // Update: {
   //   screen: UpdateUser,
   //   navigationOptions: {
@@ -69,4 +69,5 @@ const App = createStackNavigator({
   //   },
   // },
 });
+
 export default createAppContainer(App);

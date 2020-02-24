@@ -14,32 +14,33 @@ import { getLocalStorage, setLocalStorage } from './localStorage';
 // import { offline } from '@redux-offline/redux-offline';
 // import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 
-const persistedState = getLocalStorage();
-// This context need to debug react native code
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const persistedState = getLocalStorage();
+// // This context need to debug react native code
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(
-  reducers,
-  persistedState,
-  composeEnhancers(
-    applyMiddleware(reduxThunk)
-  )
-);
+// const store = createStore(
+//   reducers,
+//   persistedState,
+//   composeEnhancers(
+//     applyMiddleware(reduxThunk)
+//   )
+// );
 
-//Need to save state anytime the store state changes
-store.subscribe(() => {
-  setLocalStorage({
-    userData: store.getState().userData,
-    sessions: store.getState().sessions,
-    jobMeta: store.getState().jobMeta,
-    db: store.getState().db
-  });
-});
+// //Need to save state anytime the store state changes
+// store.subscribe(() => {
+//   setLocalStorage({
+//     userData: store.getState().userData,
+//     sessions: store.getState().sessions,
+//     jobMeta: store.getState().jobMeta,
+//     db: store.getState().db
+//   });
+// });
 
-const RNRedux = () => (
-  <Provider store = { store }>
-    <App />
-  </Provider>
-)
+// const RNRedux = () => (
+//   <Provider store = { store }>
+//     <App />
+//   </Provider>
+// )
 
-AppRegistry.registerComponent(appName, () => RNRedux);
+// AppRegistry.registerComponent(appName, () => RNRedux);
+AppRegistry.registerComponent(appName, () => App);
