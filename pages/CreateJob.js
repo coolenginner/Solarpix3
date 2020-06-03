@@ -1,15 +1,28 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Picker } from 'react-native';
+import {StyleSheet, View, Text, Picker, BackHandler} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Mybutton from './components/Mybutton';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-community/async-storage';
-import { addNewJob, createJobList, setCurrentJob, setJobCounter } from '../actions';
+import { addNewJob, createJobList, setCurrentJob, setJobCounter} from '../actions';
 
 class CreateJob extends Component {
 
-state = { jobname: "", jobStyle: "install", toCategories: false, jobId: ''};
+state = { jobname: "", jobStyle: "install", jobId: ''};
+
+componentDidMount() {
+  BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+}
+
+componentWillUnmount() {
+  BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+}
+
+handleBackButton() {
+  return true;
+}
 
 getOpenJobId = () => {                                               
   const currentJobs = this.props.jobs;
@@ -30,9 +43,9 @@ getOpenJobId = () => {
 onSubmit = async () => {
   try {
     const value = await AsyncStorage.getItem('state');
-    if (value !== null) {
+    const projName = this.state.jobname.toUpperCase();
 
-      const projName = this.state.jobname.toUpperCase();
+    if (value !== null && String(projName).length > 0) {
 
       if(value.includes(`"sessions":{}`))
       {
@@ -52,30 +65,30 @@ onSubmit = async () => {
         }
       }
 
-      this.setState({ toCategories: true, jobId: this.props.currentJob });
+      this.props.navigation.navigate('CategoryList');
+    }
+    else
+    {
+      Toast.show('You did not enter the project name!',Toast.LONG);
+      this.props.navigation.navigate('JobList');
     }
   } catch (error) {
     console.log(error);
   }
 }
 
-render() {
-
-  if(this.state.toCategories){
-    this.props.navigation.navigate('CategoryList');
-  }
-  
+render() {  
   return (
-      <View style={{ flex: 1, marginTop: 50}}>
-        <Text style={{ fontSize: 25, fontWeight:'bold', marginLeft:25 }}>New Job</Text>
-        <Text style={{ marginTop: 20, fontWeight:'bold', marginLeft:25 }}>Project name(try to use one word, all use same)</Text>        
+      <View style={{ flex: 1, marginTop: 30}}>
+        <Text style={{ fontSize: 20, fontWeight:'bold', marginLeft:25}}>New Job</Text>
+        <Text style={{ marginTop: 20, fontWeight:'bold', marginLeft:25 }}>Project Name (Use one word for project name. If multiple team members, all use the same word.)</Text>        
         <TextInput value={this.state.jobname} onChangeText={(text) => this.setState({ jobname: text })} style={{paddingLeft:5, margin:25, marginTop:10, height: 40, borderColor: 'gray', borderWidth: 1,borderRadius:5 }}></TextInput>
         <Text style={{marginLeft:25,fontWeight:'bold'}}>Profile</Text>
         <Picker style={styles.pickerStyle}
                 selectedValue={this.state.jobStyle}  
                 onValueChange={(itemValue, itemPosition) =>this.setState({jobStyle: itemValue})}         >  
-            <Picker.Item label="Install" value="install" />  
-            <Picker.Item label="PCSV" value="pcsv" />  
+            <Picker.Item label="Install" value="install" />
+            <Picker.Item label="PCSV" value="pcsv" />
             <Picker.Item label="Sales SV" value="ssv" /> 
         </Picker>
         <Mybutton title="Submit" customClick = {this.onSubmit}/>

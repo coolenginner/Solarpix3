@@ -1,48 +1,41 @@
-import files from '../apis/files';
+import axios from 'axios';
+import { isAndroid } from 'react-native-device-detection';
 
-//import axiosRetry from 'axios-retry';
-
-const uploadImage = (image) => {
-
-  //axios retry for exponential back-off
-  //axiosRetry(files, { retryDelay: axiosRetry.exponentialDelay });
-
-
-  //Set up necessary parameters for POST to EmPower server
-  const authParam = { username: 'upload', password: 'nD2Qm9t4' };
+const uploadImage = async (imageurl, imageTitle) => {
+  
   const url = 'http://upload.empower-solar.com/index2.php';
+  const data = new FormData();
 
-  //Set up necessary parameters for CORS proxy
-  /*
-  const proxyurl = "https://cors-anywhere.herokuapp.com/";
-  await fetch(proxyurl + url)
-  .then(response => response.text())
-  .then(contents => console.log(contents))
-  .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
-  */
-
-  const config = {
-    auth: authParam,
-    crossDomain: true
+  if(isAndroid)
+  {
+    data.append('upload', {
+      uri: 'file://' + imageurl,
+      type: 'image/jpeg',
+      name: imageTitle + '.jpg'
+    });
   }
+  else 
+  {
+    data.append('upload', {
+      uri: imageurl,
+      type: 'image/jpeg',
+      name: imageTitle + '.jpg'
+    });
+  } 
 
-  const formData = new FormData();
-  formData.append('upload',image);
-
-  //Check if formData image is messed up.
-  /*
-  if(formData.get('upload').size === 0 || image.lastModified === 0){
-    console.log('This is formData: ', formData.get('upload'));
-    return new Promise.reject(new Error('Image Corrupted'));
-  }
-  */
-
-
-  return files.post('https://cors-anywhere.herokuapp.com/' + url, formData, config);
-  //return Promise.reject();
-  //return axiosRetry(files)
-
-
+  return axios({
+    method: 'post',
+    url: url,
+    data: data,
+    headers: {
+       "crossDomain":"true",
+       "Authorization":"Basic dXBsb2FkOm5EMlFtOXQ0",
+       "Content-Type": "multipart/form-data",
+       "processData": false,
+       "contentType": false,
+       "mimeType": "multipart/form-data",
+    }
+  });
 }
 
 export default uploadImage;

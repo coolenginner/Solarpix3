@@ -22,6 +22,7 @@ export default (state = {}, action) => {
       newState = { ...state };
       //Normalizr was supposed to make these easier?!?!
       newState.entities.pictureReqs[action.payload.photoReq].categories[action.payload.categoryId].photoQty = action.payload.photoQty;
+      newState.entities.pictureReqs[action.payload.photoReq].categories[action.payload.categoryId].sphotoQty = action.payload.sphotoQty;
       return newState;
 
     case DELETE_JOB:

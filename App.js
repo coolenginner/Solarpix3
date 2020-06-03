@@ -11,63 +11,55 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator} from 'react-navigation-stack';
  
 import SignIn from './pages/SignIn';
-// import JobList from './pages/JobList';
-// import CreateJob from './pages/CreateJob';
-// import ViewUser from './pages/ViewUser';
-// import ViewAllUser from './pages/ViewAllUser';
-// import DeleteUser from './pages/DeleteUser';
- 
+import JobList from './pages/JobList';
+import CreateJob from './pages/CreateJob';
+import CategoryList from './pages/CategoryList';
+import CategoryEdit from './pages/CategoryEdit';
+import BackgroundTimer from 'react-native-background-timer';
+import NetInfo from '@react-native-community/netinfo';
+import muploadImage from './apis/muploadImage';
+import AsyncStorage from '@react-native-community/async-storage';
+
+BackgroundTimer.runBackgroundTimer(async() => {
+  const netStatus = await NetInfo.fetch();
+  var uploading = await AsyncStorage.getItem('progress');
+  if (netStatus.isConnected == true && uploading != 'true') {
+    await muploadImage();
+    await AsyncStorage.setItem('progress', 'true');
+  }
+},1000);
+
 const App = createStackNavigator({
   SignIn: {
     screen: SignIn,
     navigationOptions: {
-      title: 'SIGN IN',
-      headerStyle: { backgroundColor: '#f05555' },
-      headerTintColor: '#ffffff',
+      headerShown : false,
     },
   },
-  // JobList: {
-  //   screen: JobList,
-  //   navigationOptions: {
-  //     title: 'JOBLIST',
-  //     headerStyle: { backgroundColor: '#f05555' },
-  //     headerTintColor: '#ffffff',
-  //     headerLeft: null,
-  //   },
-  // },
-  // CreateJob: {
-  //   screen: CreateJob,
-  //   navigationOptions: {
-  //     title: 'CreateJob',
-  //     headerStyle: { backgroundColor: '#f05555' },
-  //     headerTintColor: '#ffffff',
-  //     headerLeft: null,
-  //   },
-  // },
-  // Update: {
-  //   screen: UpdateUser,
-  //   navigationOptions: {
-  //     title: 'Update User',
-  //     headerStyle: { backgroundColor: '#f05555' },
-  //     headerTintColor: '#ffffff',
-  //   },
-  // },
-  // Register: {
-  //   screen: RegisterUser,
-  //   navigationOptions: {
-  //     title: 'Register User',
-  //     headerStyle: { backgroundColor: '#f05555' },
-  //     headerTintColor: '#ffffff',
-  //   },
-  // },
-  // Delete: {
-  //   screen: DeleteUser,
-  //   navigationOptions: {
-  //     title: 'Delete User',
-  //     headerStyle: { backgroundColor: '#f05555' },
-  //     headerTintColor: '#ffffff',
-  //   },
-  // },
+  JobList: {
+    screen: JobList,
+    navigationOptions: {
+      headerShown : false,
+    },
+  },
+  CreateJob: {
+    screen: CreateJob,
+    navigationOptions: {
+      headerShown : false,
+    },
+  },
+  CategoryList: {
+    screen: CategoryList,
+    navigationOptions: {
+      headerShown : false,
+    },
+  },
+  CategoryEdit: {
+    screen: CategoryEdit,
+    navigationOptions: {
+      headerShown : false,
+    },
+  },
 });
 
 export default createAppContainer(App);
