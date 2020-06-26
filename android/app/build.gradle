@@ -131,7 +131,7 @@ android {
         applicationId "com.empowersolar"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
+        versionCode 9
         versionName "3.4.1"
     }
     splits {

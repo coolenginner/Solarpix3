@@ -230,7 +230,7 @@ onAddPhoto = (response) => {
   if(isAndroid)osName = 'and';
   else osName = 'ios';
 
-  const imageTitle = `${job.projectName}-${job.profileName}_${this.props.categories[this.state.categoryId].title}-${imageQty}_${userName}{${osName}_3-0-0_${pixelDensity}}`;
+  const imageTitle = `${job.projectName}-${job.profileName}_${this.props.categories[this.state.categoryId].title}-${imageQty}_${userName}{${osName}_3-4-1_${pixelDensity}}`;
   const imageId = `${this.state.categoryId}_${timeStamp}`;
   const imagePath = `${RNFS.DocumentDirectoryPath}/${imageTitle}.jpg`;
 
